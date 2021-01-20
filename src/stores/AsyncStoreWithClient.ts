@@ -21,9 +21,9 @@ import { Dispatcher } from "flux";
 import { MatrixClientPeg } from "../MatrixClientPeg";
 
 export abstract class AsyncStoreWithClient<T extends Object> extends AsyncStore<T> {
-    protected matrixClient: MatrixClient;
+    public matrixClient: MatrixClient;
 
-    protected abstract async onAction(payload: ActionPayload);
+    protected abstract onAction(payload: ActionPayload): Promise<void>;
 
     protected constructor(dispatcher: Dispatcher<ActionPayload>, initialState: T = <T>{}) {
         super(dispatcher, initialState);
