@@ -76,7 +76,7 @@ export const useWidgets = (room: Room) => {
         setApps([...WidgetStore.instance.getApps(room.roomId)]);
     }, [room]);
 
-    useEffect(updateApps, [room]);
+    useEffect(updateApps, [room, updateApps]);
     useEventEmitter(WidgetStore.instance, room.roomId, updateApps);
 
     return apps;
