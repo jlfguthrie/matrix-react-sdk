@@ -1,7 +1,7 @@
 /*
 Copyright 2017 Vector Creations Ltd
 Copyright 2018 New Vector Ltd
-Copyright 2019 The Matrix.org Foundation C.I.C.
+Copyright 2019, 2021 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -32,10 +32,6 @@ import {Action} from "../../../dispatcher/actions";
 const REGEX_LOCAL_PERMALINK = /^#\/(?:user|room|group)\/(([#!@+]).*?)(?=\/|\?|$)/;
 
 class Pill extends React.Component {
-    static isMessagePillUrl(url) {
-        return !!REGEX_LOCAL_PERMALINK.exec(url);
-    }
-
     static roomNotifPos(text) {
         return text.indexOf("@room");
     }

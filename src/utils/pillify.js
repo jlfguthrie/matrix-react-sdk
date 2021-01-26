@@ -1,5 +1,5 @@
 /*
-Copyright 2019, 2020 The Matrix.org Foundation C.I.C.
+Copyright 2019, 2020, 2021 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -39,33 +39,7 @@ export function pillifyLinks(nodes, mxEvent, pills) {
     const shouldShowPillAvatar = SettingsStore.getValue("Pill.shouldShowPillAvatar");
     let node = nodes[0];
     while (node) {
-        let pillified = false;
-
-        if (node.tagName === "A" && node.getAttribute("href")) {
-            const href = node.getAttribute("href");
-
-            // If the link is a (localised) matrix.to link, replace it with a pill
-            const Pill = sdk.getComponent('elements.Pill');
-            if (Pill.isMessagePillUrl(href)) {
-                const pillContainer = document.createElement('span');
-
-                const pill = <Pill
-                    url={href}
-                    inMessage={true}
-                    room={room}
-                    shouldShowPillAvatar={shouldShowPillAvatar}
-                />;
-
-                ReactDOM.render(pill, pillContainer);
-                node.parentNode.replaceChild(pillContainer, node);
-                pills.push(pillContainer);
-                // Pills within pills aren't going to go well, so move on
-                pillified = true;
-
-                // update the current node with one that's now taken its place
-                node = pillContainer;
-            }
-        } else if (
+        if (
             node.nodeType === Node.TEXT_NODE &&
             // as applying pills happens outside of react, make sure we're not doubly
             // applying @room pills here, as a rerender with the same content won't touch the DOM
@@ -125,7 +99,7 @@ export function pillifyLinks(nodes, mxEvent, pills) {
             }
         }
 
-        if (node.childNodes && node.childNodes.length && !pillified) {
+        if (node.childNodes && node.childNodes.length) {
             pillifyLinks(node.childNodes, mxEvent, pills);
         }
 
